@@ -1,0 +1,17 @@
+You can create a session object on every new request and save it, and on response check the saved one is still the same as the one you have:
+
+const currentSession ={};
+this.lastSession = currentSession;
+fetch(url)
+  .then(data => data.json())
+  .then(items =>{
+    if (this.lastSession !== currentSession) {
+      return;
+    }
+    updateState(items);
+  }).catch(error =>{
+    if (this.lastSession !== currentSession){
+      return;
+    }
+    setError(error);
+  });
